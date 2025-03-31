@@ -1,0 +1,144 @@
+<%- include('../layouts/main', { title: 'Moment Crafters - Wedding Planning' }); %>
+
+<!-- Hero Section -->
+<section class="relative bg-cover bg-center h-screen" style="background-image: url('/images/wedding-hero.jpg')">
+  <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="text-center px-4 max-w-4xl">
+      <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">Your Dream Wedding Starts Here</h1>
+      <p class="text-xl text-white mb-8">Discover top-rated vendors, plan effortlessly, and create unforgettable moments</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="/auth/register" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300">
+          Start Planning
+        </a>
+        <a href="/vendors" class="border-2 border-white text-white hover:bg-white hover:text-indigo-700 font-bold py-3 px-8 rounded-lg text-lg transition duration-300">
+          Browse Vendors
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Vendor Categories -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-12">Wedding Vendor Categories</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <% categories.forEach(category => { %>
+        <a href="/vendors?category=<%= category.slug %>" class="group">
+          <div class="bg-gray-50 rounded-lg p-6 text-center transition transform hover:scale-105">
+            <div class="bg-indigo-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+              <i class="<%= category.icon %> text-indigo-600 text-2xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold group-hover:text-indigo-600"><%= category.name %></h3>
+          </div>
+        </a>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Vendors -->
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-12">Featured Wedding Vendors</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <% featuredVendors.forEach(vendor => { %>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transition transform hover:scale-105">
+          <img src="<%= vendor.imageUrl || '/images/vendor-placeholder.jpg' %>" alt="<%= vendor.businessName %>" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2"><%= vendor.businessName %></h3>
+            <p class="text-indigo-600 mb-2"><%= vendor.category %></p>
+            <p class="text-gray-600 mb-4"><%= vendor.description.substring(0, 100) %>...</p>
+            <div class="flex items-center mb-3">
+              <div class="flex text-yellow-400">
+                <% for(let i=0; i<5; i++) { %>
+                  <i class="fas <%= i < vendor.averageRating ? 'fa-star' : 'fa-star-half-alt' %>"></i>
+                <% } %>
+              </div>
+              <span class="text-gray-600 ml-2">(<%= vendor.reviewCount %> reviews)</span>
+            </div>
+            <a href="/vendors/<%= vendor._id %>" class="text-indigo-600 hover:text-indigo-800 font-medium">View Details →</a>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+    <div class="text-center mt-8">
+      <a href="/vendors" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300">
+        View All Vendors
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Wedding Planning Tools -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-12">Wedding Planning Tools</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-gray-50 rounded-lg p-6">
+        <div class="flex items-center mb-4">
+          <div class="bg-indigo-100 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+            <i class="fas fa-calendar-alt text-indigo-600"></i>
+          </div>
+          <h3 class="text-xl font-semibold">Wedding Timeline</h3>
+        </div>
+        <p class="text-gray-600">Create and manage your wedding schedule with our interactive timeline tool.</p>
+      </div>
+      <div class="bg-gray-50 rounded-lg p-6">
+        <div class="flex items-center mb-4">
+          <div class="bg-indigo-100 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+            <i class="fas fa-list-alt text-indigo-600"></i>
+          </div>
+          <h3 class="text-xl font-semibold">Checklist</h3>
+        </div>
+        <p class="text-gray-600">Never miss an important task with our comprehensive wedding checklist.</p>
+      </div>
+      <div class="bg-gray-50 rounded-lg p-6">
+        <div class="flex items-center mb-4">
+          <div class="bg-indigo-100 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+            <i class="fas fa-money-bill-wave text-indigo-600"></i>
+          </div>
+          <h3 class="text-xl font-semibold">Budget Tracker</h3>
+        </div>
+        <p class="text-gray-600">Manage your wedding expenses and stay on budget with our tracking tool.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-16 bg-indigo-700 text-white">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-12">Real Wedding Stories</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <% testimonials.forEach(testimonial => { %>
+        <div class="bg-white bg-opacity-10 p-8 rounded-lg">
+          <div class="flex items-center mb-4">
+            <img src="<%= testimonial.userImage || '/images/user-placeholder.jpg' %>" alt="<%= testimonial.userName %>" class="w-12 h-12 rounded-full object-cover">
+            <div class="ml-4">
+              <h4 class="font-semibold"><%= testimonial.userName %></h4>
+              <p class="text-indigo-200 text-sm"><%= testimonial.weddingDate %></p>
+            </div>
+          </div>
+          <p class="mb-4">"<%= testimonial.content %>"</p>
+          <div class="flex text-yellow-300">
+            <% for(let i=0; i<5; i++) { %>
+              <i class="fas fa-star"></i>
+            <% } %>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-3xl font-bold mb-6">Ready to Plan Your Perfect Wedding?</h2>
+    <p class="text-xl mb-8 max-w-2xl mx-auto">Join thousands of couples who found their dream vendors with Moment Crafters</p>
+    <a href="/auth/register" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-300">
+      Get Started - It's Free
+    </a>
+  </div>
+</section>
